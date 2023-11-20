@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/burger_nav_graph"
+    app:startDestination="@id/burgerFragment">
+
+    <fragment
+        android:id="@+id/burgerFragment"
+        android:name="com.example.burger.ui.view.BurgerFragment"
+        android:label="BurgerFragment"
+        tools:layout="@layout/fragment_burger"/>
+
+    <fragment
+        android:id="@+id/layout"
+        android:name="com.example.burger.ui.view.Layout"
+        android:label="Layout" >
+    </fragment>
+
+</navigation>

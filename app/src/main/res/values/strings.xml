@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Burger</string>
+
+    <string name="text_description_item_burger">🍔 The Grand Epicurean Gastronomical Masterpiece 🍔</string>
+    <string name="text_value_item_burger">R$ 4,51</string>
+    <string name="list_burgers_title">Lista de Burgers</string>
+</resources>

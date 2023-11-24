@@ -12,7 +12,7 @@ class BurgerAdapter(
     private val listBurger: List<BurgerVO>,
 //    private val onClick: (Int) -> Unit
 
-): RecyclerView.Adapter<BurgerAdapter.MyViewHolder>() {
+) : RecyclerView.Adapter<BurgerAdapter.MyViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         return MyViewHolder(
@@ -31,6 +31,11 @@ class BurgerAdapter(
         holder.binding.textNameBurger.text = burger.name
         holder.binding.textDescriptionBurger.text = burger.desc
         holder.binding.textValueBurger.text = burger.price?.formattedCurrency()
+
+        Picasso
+            .get()
+            .load(burger.imageVO?.get(1)?.lg)
+            .into(holder.binding.imageBurger)
 
         holder.itemView.setOnClickListener {
         }

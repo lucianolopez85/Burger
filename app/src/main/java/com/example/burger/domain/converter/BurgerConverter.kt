@@ -12,13 +12,13 @@ class BurgerConverter {
             BurgerVO(
                 desc = dto.desc,
                 id = dto.id,
-                imageVO = dto.imageResponseDTO?.map {
+                imageVO = dto.imagesResponseDTO?.map {
                        ImageVO(
                            lg = it?.lg,
                            sm = it?.sm
                        )
                 },
-                ingredientVO = dto.ingredientResponsDTO?.map {
+                ingredientVO = dto.ingredientsResponseDTO?.map {
                     IngredientVO(
                         id = it?.id,
                         img = it?.img,

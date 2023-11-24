@@ -3,6 +3,7 @@ package com.example.burger.ui.view
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
 import com.example.burger.R
 import com.example.burger.databinding.FragmentBurgerBinding
 import com.example.burger.domain.vo.BurgerVO
@@ -31,7 +32,10 @@ class BurgerFragment : Fragment(R.layout.fragment_burger) {
 
         with(binding.recyclerView) {
             setHasFixedSize(true)
-            adapter = BurgerAdapter(data)
+            adapter = BurgerAdapter(data) {
+                findNavController().navigate(R.id.action_burgerFragment_to_detailsFragment)
+
+            }
         }
     }
 

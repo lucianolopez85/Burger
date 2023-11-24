@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/icon_back_detail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/size_16"
+        android:src="@drawable/ic_back"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/image_burger_detail"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_margin="@dimen/size_24"
+        tools:src="@tools:sample/avatars"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/icon_back_detail" />
+
+    <TextView
+        android:id="@+id/title_burger_detaiL"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/TextAppearance.Material3.TitleLarge"
+        tools:text="Bacon, Egg e Cheese Biscuit"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/image_burger_detail"
+        android:layout_margin="@dimen/size_24"
+        />
+
+    <TextView
+        android:id="@+id/description_burger_detail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/TextAppearance.Material3.BodyLarge"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/title_burger_detaiL"
+        android:layout_margin="@dimen/size_24"
+        android:maxLines="5"
+        android:autoSizeMaxTextSize="@dimen/size_24"
+        tools:text="@tools:sample/lorem/random"
+        />
+
+    <TextView
+        android:id="@+id/value_detail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/description_burger_detail"
+        android:layout_margin="@dimen/size_24"
+        android:textSize="24dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:text="R$ 5,99"
+        android:textColor="@color/orange"
+        />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/description_burger_detail"
+        android:layout_margin="@dimen/size_28"
+        >
+        <ImageView
+            android:layout_width="24sp"
+            android:layout_height="24sp"
+            android:src="@drawable/ic_star_solid"
+            app:tint="#ffdd00"
+            />
+        <ImageView
+            android:layout_width="24sp"
+            android:layout_height="24sp"
+            android:src="@drawable/ic_star_solid"
+            app:tint="#ffdd00"
+            />
+        <ImageView
+            android:layout_width="24sp"
+            android:layout_height="24sp"
+            android:src="@drawable/ic_star_solid"
+            app:tint="#ffdd00"
+            />
+        <ImageView
+            android:layout_width="24sp"
+            android:layout_height="24sp"
+            android:src="@drawable/ic_star_outline"
+            app:tint="#ffdd00"
+            />
+        <ImageView
+            android:layout_width="24sp"
+            android:layout_height="24sp"
+            android:src="@drawable/ic_star_outline"
+            app:tint="#ffdd00"
+            />
+    </LinearLayout>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_ingredient"
+        app:layout_constraintTop_toBottomOf="@id/value_detail"
+        android:layout_margin="@dimen/size_24"
+        >
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_ingredients"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:itemCount="5"
+            tools:listitem="@layout/item_ingredients"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

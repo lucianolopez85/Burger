@@ -9,12 +9,20 @@
         android:id="@+id/burgerFragment"
         android:name="com.example.burger.ui.view.BurgerFragment"
         android:label="BurgerFragment"
-        tools:layout="@layout/fragment_burger"/>
+        tools:layout="@layout/fragment_burger">
+        <action
+            android:id="@+id/action_burgerFragment_to_detailsFragment"
+            app:destination="@id/detailsFragment" />
+    </fragment>
 
     <fragment
-        android:id="@+id/layout"
-        android:name="com.example.burger.ui.view.Layout"
-        android:label="Layout" >
+        android:id="@+id/detailsFragment"
+        android:name="com.example.burger.ui.view.DetailsFragment"
+        android:label="DetailsFragment"
+        tools:layout="@layout/fragment_details">
+        <action
+            android:id="@+id/action_detailsFragment_to_burgerFragment"
+            app:destination="@id/burgerFragment" />
     </fragment>
 
 </navigation>

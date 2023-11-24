@@ -1,8 +1,12 @@
 package com.example.burger.ui.adapter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.burger.R
 import com.example.burger.commons.formattedCurrency
 import com.example.burger.databinding.ItemBurgerBinding
 import com.example.burger.domain.vo.BurgerVO
@@ -10,37 +14,51 @@ import com.squareup.picasso.Picasso
 
 class BurgerAdapter(
     private val listBurger: List<BurgerVO>,
-//    private val onClick: (Int) -> Unit
+    private val onItemClick: (BurgerVO) -> Unit
 
-) : RecyclerView.Adapter<BurgerAdapter.MyViewHolder>() {
+) : ListAdapter<BurgerVO, BurgerAdapter.ItemViewHolder>(DiffUtil) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-        return MyViewHolder(
-            ItemBurgerBinding.inflate(
-                LayoutInflater.from(parent.context),
-                parent, false
-            )
-        )
-    }
+    inner class ItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        private val binding = ItemBurgerBinding.bind(view)
+        fun bind(data: BurgerVO) {
+            binding.textNameBurger.text = data.name
+            binding.textDescriptionBurger.text = data.desc
+            binding.textPriceBurger.text = data.price?.formattedCurrency()
 
-    override fun getItemCount() = listBurger.size
-
-    override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        val burger = listBurger[position]
-
-        holder.binding.textNameBurger.text = burger.name
-        holder.binding.textDescriptionBurger.text = burger.desc
-        holder.binding.textValueBurger.text = burger.price?.formattedCurrency()
-
-        Picasso
-            .get()
-            .load(burger.imageVO?.get(1)?.lg)
-            .into(holder.binding.imageBurger)
-
-        holder.itemView.setOnClickListener {
+            Picasso
+                .get()
+                .load(data.imageVO?.get(1)?.lg)
+                .into(binding.imageBurger)
         }
 
     }
 
-    inner class MyViewHolder(val binding: ItemBurgerBinding) : RecyclerView.ViewHolder(binding.root)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder =
+        ItemViewHolder(
+            LayoutInflater.from(parent.context)
+                .inflate(R.layout.item_burger, parent, false)
+        )
+
+
+    override fun getItemCount() = listBurger.size
+
+    override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
+        val data = listBurger.getOrNull(position)
+
+        data?.let { data ->
+            holder.bind(data)
+            holder.itemView.setOnClickListener {
+                onItemClick(data)
+            }
+        }
+    }
+}
+
+private val DiffUtil = object : DiffUtil.ItemCallback<BurgerVO>() {
+    override fun areItemsTheSame(oldItem: BurgerVO, newItem: BurgerVO) =
+        oldItem.id == newItem.id
+
+    override fun areContentsTheSame(oldItem: BurgerVO, newItem: BurgerVO) =
+        oldItem == newItem
+
 }

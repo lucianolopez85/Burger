@@ -7,7 +7,7 @@ import java.util.Locale
 
 fun Double.formattedCurrency(): String? {
     val nf: NumberFormat = DecimalFormat(
-        "#,##0.00", DecimalFormatSymbols(
+        "R$ #,##0.00", DecimalFormatSymbols(
             Locale("pt", "BR")
         )
     )

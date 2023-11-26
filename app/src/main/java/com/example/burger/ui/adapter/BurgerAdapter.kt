@@ -13,9 +13,7 @@ import com.example.burger.domain.vo.BurgerVO
 import com.squareup.picasso.Picasso
 
 class BurgerAdapter(
-    private val listBurger: List<BurgerVO>,
     private val onItemClick: (BurgerVO) -> Unit
-
 ) : ListAdapter<BurgerVO, BurgerAdapter.ItemViewHolder>(DiffUtil) {
 
     inner class ItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -24,13 +22,11 @@ class BurgerAdapter(
             binding.textNameBurger.text = data.name
             binding.textDescriptionBurger.text = data.desc
             binding.textPriceBurger.text = data.price?.formattedCurrency()
-
             Picasso
                 .get()
-                .load(data.imageVO?.get(1)?.lg)
+                .load(data.imageVO?.get(0)?.lg)
                 .into(binding.imageBurger)
         }
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder =
@@ -39,16 +35,11 @@ class BurgerAdapter(
                 .inflate(R.layout.item_burger, parent, false)
         )
 
-
-    override fun getItemCount() = listBurger.size
-
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
-        val data = listBurger.getOrNull(position)
-
-        data?.let { data ->
-            holder.bind(data)
+        getItem(position)?.let { listBurger ->
+            holder.bind(listBurger)
             holder.itemView.setOnClickListener {
-                onItemClick(data)
+                onItemClick(listBurger)
             }
         }
     }
@@ -60,5 +51,4 @@ private val DiffUtil = object : DiffUtil.ItemCallback<BurgerVO>() {
 
     override fun areContentsTheSame(oldItem: BurgerVO, newItem: BurgerVO) =
         oldItem == newItem
-
 }

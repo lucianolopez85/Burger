@@ -3,7 +3,7 @@ package com.example.burger.data.dto
 import com.google.gson.annotations.SerializedName
 
 data class IngredientResponseDTO(
-    @SerializedName("id") val id: Int,
-    @SerializedName("img") val img: String,
-    @SerializedName("name") val name: String
+    @SerializedName("id") var id: Int?,
+    @SerializedName("img") var img: String?,
+    @SerializedName("name") var name: String?
 )

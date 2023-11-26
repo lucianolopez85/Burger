@@ -1,5 +1,7 @@
 package com.example.burger.domain.vo
 
+import java.io.Serializable
+
 data class BurgerVO(
     val desc: String?,
     val id: Int?,
@@ -9,4 +11,4 @@ data class BurgerVO(
     val price: Double?,
     val veg: Boolean?
 
-)
+) : Serializable

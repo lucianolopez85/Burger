@@ -8,6 +8,8 @@ import com.example.burger.R
 import com.example.burger.commons.formattedCurrency
 import com.example.burger.databinding.FragmentDetailsBinding
 import com.example.burger.domain.vo.BurgerVO
+import com.example.burger.domain.vo.IngredientVO
+import com.example.burger.ui.adapter.IngredientsAdapter
 import com.example.burger.ui.viewmodel.BurgerViewModel
 import com.squareup.picasso.Picasso
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -31,15 +33,25 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
     }
 
     private fun setupLayout() {
-        burgerId.let { burger ->
-            binding.titleBurgerDetaiL.text = burger.name
-            binding.descriptionBurgerDetail.text = burger.desc
-            binding.priceDetail.text = burger.price?.formattedCurrency()
+        burgerId.let { burgerVO ->
+            binding.titleBurgerDetaiL.text = burgerVO.name
+            binding.descriptionBurgerDetail.text = burgerVO.desc
+            binding.priceDetail.text = burgerVO.price?.formattedCurrency()
 
             Picasso
                 .get()
-                .load(burger.imageVO?.get(0)?.lg)
+                .load(burgerVO.imageVO?.get(0)?.lg)
                 .into(binding.imageBurgerDetail)
+
+            initRecyclerView(burgerVO.ingredientVO ?: emptyList())
+        }
+    }
+
+    private fun initRecyclerView(ingredients: List<IngredientVO?>?) {
+        val ingredientsAdapter = IngredientsAdapter()
+        with(binding.rvIngredients) {
+            adapter = ingredientsAdapter
+            ingredientsAdapter.submitList(ingredients)
         }
     }
 }

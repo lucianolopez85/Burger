@@ -14,14 +14,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/image_burger_detail"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_width="@dimen/size_200"
+        android:layout_height="@dimen/size_200"
         android:layout_margin="@dimen/size_24"
-        tools:src="@tools:sample/avatars"
+        android:adjustViewBounds="true"
+        android:src="@mipmap/ic_launcher"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/icon_back_detail" />
+        app:layout_constraintTop_toBottomOf="@id/icon_back_detail"
+        app:shapeAppearanceOverlay="@style/RoundCorner" />
 
     <TextView
         android:id="@+id/title_burger_detaiL"
@@ -31,8 +35,7 @@
         tools:text="Bacon, Egg e Cheese Biscuit"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/image_burger_detail"
-        android:layout_margin="@dimen/size_24"
-        />
+        android:layout_margin="@dimen/size_24" />
 
     <TextView
         android:id="@+id/description_burger_detail"
@@ -44,8 +47,7 @@
         android:layout_margin="@dimen/size_24"
         android:maxLines="5"
         android:autoSizeMaxTextSize="@dimen/size_24"
-        tools:text="@tools:sample/lorem/random"
-        />
+        tools:text="@tools:sample/lorem/random" />
 
     <TextView
         android:id="@+id/price_detail"
@@ -57,65 +59,63 @@
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         tools:text="R$ 5,99"
-        android:textColor="@color/orange"
-        />
+        android:textColor="@color/orange" />
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/description_burger_detail"
-        android:layout_margin="@dimen/size_28"
-        >
+        android:layout_margin="@dimen/size_28" >
         <ImageView
             android:layout_width="24sp"
             android:layout_height="24sp"
             android:src="@drawable/ic_star_solid"
-            app:tint="#ffdd00"
-            />
+            app:tint="#ffdd00" />
         <ImageView
             android:layout_width="24sp"
             android:layout_height="24sp"
             android:src="@drawable/ic_star_solid"
-            app:tint="#ffdd00"
-            />
+            app:tint="#ffdd00" />
         <ImageView
             android:layout_width="24sp"
             android:layout_height="24sp"
             android:src="@drawable/ic_star_solid"
-            app:tint="#ffdd00"
-            />
+            app:tint="#ffdd00" />
         <ImageView
             android:layout_width="24sp"
             android:layout_height="24sp"
             android:src="@drawable/ic_star_outline"
-            app:tint="#ffdd00"
-            />
+            app:tint="#ffdd00" />
         <ImageView
             android:layout_width="24sp"
             android:layout_height="24sp"
             android:src="@drawable/ic_star_outline"
-            app:tint="#ffdd00"
-            />
+            app:tint="#ffdd00" />
     </LinearLayout>
-
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/bg_ingredient"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/price_detail"
-        android:layout_margin="@dimen/size_24"
-        >
+        android:layout_margin="@dimen/size_24" >
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_ingredients"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:itemCount="5"
-            tools:listitem="@layout/item_ingredients"
-            />
+            tools:listitem="@layout/item_ingredients" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

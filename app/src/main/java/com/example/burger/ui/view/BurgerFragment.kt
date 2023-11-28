@@ -39,7 +39,6 @@ class BurgerFragment : Fragment(R.layout.fragment_burger) {
 
         with(binding.recyclerView) {
             setHasFixedSize(true)
-            layoutManager = LinearLayoutManager(requireContext())
             adapter = burgerAdapter
             burgerAdapter.submitList(data)
         }

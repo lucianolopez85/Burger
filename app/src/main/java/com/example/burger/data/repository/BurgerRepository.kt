@@ -8,9 +8,10 @@ import com.example.burger.data.dto.IngredientResponseDTO
 class BurgerRepository(private val api: ServiceAPI) {
 
     suspend fun getBurgers(): List<BurgerResponseDTO> = listMock
+//        api.getBurgers()
 
-//        return api.getBurgers()
-//    }
+    suspend fun getBurgerByName(name: String): List<BurgerResponseDTO>  = listMock
+//        api.getBurgerByName(name)
 }
 
 val listMock = listOf(

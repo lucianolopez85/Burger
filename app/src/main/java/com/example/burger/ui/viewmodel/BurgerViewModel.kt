@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.burger.data.repository.BurgerRepository
 import com.example.burger.domain.converter.BurgerConverter
 import com.example.burger.domain.vo.BurgerVO
+import com.example.burger.commons.uiState
 import kotlinx.coroutines.launch
 
 class BurgerViewModel(
@@ -14,20 +15,21 @@ class BurgerViewModel(
     private val converter: BurgerConverter
 ) : ViewModel() {
 
-    private val _listBurgers = MutableLiveData<List<BurgerVO>>()
-    val listBurger: LiveData<List<BurgerVO>> = _listBurgers
+    private val _listBurgers = MutableLiveData<uiState<List<BurgerVO>>>()
+    val listBurger: LiveData<uiState<List<BurgerVO>>> = _listBurgers
 
     private val _searchBurgers = MutableLiveData<List<BurgerVO>>()
     val searchBurgers: LiveData<List<BurgerVO>> = _searchBurgers
 
     fun fetchData() {
         viewModelScope.launch {
+            _listBurgers.value = uiState.Loading
             try {
                 val listDTO = repository.getBurgers()
                 val listVO = converter.convert(listDTO)
-                _listBurgers.value = listVO
+                _listBurgers.value = uiState.Success(listVO)
             } catch (e: Exception) {
-                println("Erro na requisição: ${e.message}")
+                _listBurgers.value = uiState.Error(e)
             }
         }
     }

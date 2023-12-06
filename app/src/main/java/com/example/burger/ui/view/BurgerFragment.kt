@@ -8,6 +8,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.burger.R
+import com.example.burger.commons.uiState
 import com.example.burger.databinding.FragmentBurgerBinding
 import com.example.burger.domain.vo.BurgerVO
 import com.example.burger.ui.adapter.BurgerAdapter
@@ -48,8 +49,12 @@ class BurgerFragment : Fragment(R.layout.fragment_burger) {
     }
 
     private fun getBurgers() {
-        viewModel.listBurger.observe(viewLifecycleOwner) {
-            showSuccess(it)
+        viewModel.listBurger.observe(viewLifecycleOwner) { state ->
+            when (state) {
+                is uiState.Loading -> showLoading()
+                is uiState.Success -> showSuccess(state.data)
+                is uiState.Error -> showError(state.exception)
+            }
         }
         viewModel.fetchData()
     }
@@ -69,6 +74,11 @@ class BurgerFragment : Fragment(R.layout.fragment_burger) {
         viewModel.searchByName(name)
     }
 
+    private fun showLoading() {
+        binding.refreshLayout.isVisible = true
+        binding.refreshLayout.isRefreshing = true
+    }
+
     private fun showSuccess(data: List<BurgerVO>) {
         binding.refreshLayout.isRefreshing = false
 
@@ -82,5 +92,9 @@ class BurgerFragment : Fragment(R.layout.fragment_burger) {
             adapter = burgerAdapter
             burgerAdapter.submitList(data)
         }
+    }
+
+    private fun showError(exception: Exception) {
+
     }
 }

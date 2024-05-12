@@ -3,8 +3,6 @@ package com.example.burger.ui.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.burger.R
 import com.example.burger.commons.formattedCurrency
@@ -13,8 +11,9 @@ import com.example.burger.domain.vo.BurgerVO
 import com.squareup.picasso.Picasso
 
 class BurgerAdapter(
+    private val itemList: List<BurgerVO>,
     private val onItemClick: (BurgerVO) -> Unit
-) : ListAdapter<BurgerVO, BurgerAdapter.ItemViewHolder>(DiffUtil) {
+) : RecyclerView.Adapter<BurgerAdapter.ItemViewHolder>() {
 
     inner class ItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val binding = ItemBurgerBinding.bind(view)
@@ -24,8 +23,9 @@ class BurgerAdapter(
             binding.textPriceBurger.text = data.price?.formattedCurrency()
             Picasso
                 .get()
-                .load(data.imageVO?.get(0)?.lg)
+                .load(data.imageVO?.get(1)?.lg)
                 .into(binding.imageBurger)
+
         }
     }
 
@@ -35,20 +35,13 @@ class BurgerAdapter(
                 .inflate(R.layout.item_burger, parent, false)
         )
 
-    override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
-        getItem(position)?.let { listBurger ->
-            holder.bind(listBurger)
-            holder.itemView.setOnClickListener {
-                onItemClick(listBurger)
-            }
+    override fun getItemCount(): Int = itemList.size
+
+    override fun onBindViewHolder(holder: BurgerAdapter.ItemViewHolder, position: Int) {
+        val item = itemList[position]
+        holder.bind(item)
+        holder.itemView.setOnClickListener {
+            onItemClick(item)
         }
     }
-}
-
-private val DiffUtil = object : DiffUtil.ItemCallback<BurgerVO>() {
-    override fun areItemsTheSame(oldItem: BurgerVO, newItem: BurgerVO) =
-        oldItem.id == newItem.id
-
-    override fun areContentsTheSame(oldItem: BurgerVO, newItem: BurgerVO) =
-        oldItem == newItem
 }

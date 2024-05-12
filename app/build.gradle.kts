@@ -74,6 +74,10 @@ dependencies {
     implementation("io.insert-koin:koin-android:3.2.2")
     implementation("io.insert-koin:koin-androidx-compose:3.2.2")
 
+    //mockp-interceptor
+
+    implementation("com.github.brunogabriel.mockp-interceptor:library:0.0.1")
+
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")

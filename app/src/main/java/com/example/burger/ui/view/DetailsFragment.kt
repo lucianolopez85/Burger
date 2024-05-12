@@ -40,7 +40,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
 
             Picasso
                 .get()
-                .load(burgerVO.imageVO?.get(0)?.lg)
+                .load(burgerVO.imageVO?.get(1)?.lg)
                 .into(binding.imageBurgerDetail)
 
             initRecyclerView(burgerVO.ingredientVO ?: emptyList())

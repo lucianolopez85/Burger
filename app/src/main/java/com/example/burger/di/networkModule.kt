@@ -1,6 +1,8 @@
 package com.example.burger.di
 
+import android.content.Context
 import com.google.gson.GsonBuilder
+import io.github.brunogabriel.mockpinterceptor.MockPInterceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.dsl.module
@@ -12,7 +14,13 @@ private const val BASE_URL = "https://burgers-hub.p.rapidapi.com/"
 private const val HEADER_KEY_ACCEPT = "X-RapidAPI-Key"
 private const val HEADER_VALUE_JSON = "2fd659e119msh090ab004127ec46p1c4ccdjsn27c15565d2ba"
 
-internal val networkModule = module {
+fun createNetworkModule(context: Context) = module {
+
+    val mockpInterceptor = MockPInterceptor
+        .Builder(context)
+        .addDelayInMillis(2_000L, 5_000L)
+        .build()
+
     factory { GsonBuilder().setLenient().create() }
 
     factory {
@@ -30,6 +38,7 @@ internal val networkModule = module {
                     .build()
                 chain.proceed(request)
             }
+            .addInterceptor(mockpInterceptor)
             .build()
     }
 

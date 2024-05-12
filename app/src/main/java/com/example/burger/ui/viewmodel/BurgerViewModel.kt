@@ -1,48 +1,41 @@
 package com.example.burger.ui.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
-import com.example.burger.data.repository.BurgerRepository
-import com.example.burger.domain.converter.BurgerConverter
 import com.example.burger.domain.vo.BurgerVO
 import com.example.burger.commons.uiState
+import com.example.burger.domain.usecase.BurgerUseCase
 import kotlinx.coroutines.launch
 
 class BurgerViewModel(
-    private val repository: BurgerRepository,
-    private val converter: BurgerConverter
+    private val useCase: BurgerUseCase
 ) : ViewModel() {
 
-    private val _listBurgers = MutableLiveData<uiState<List<BurgerVO>>>()
-    val listBurger: LiveData<uiState<List<BurgerVO>>> = _listBurgers
+    private val _listBurgers = MutableLiveData<List<BurgerVO>>()
+    val listBurger: LiveData<uiState<List<BurgerVO>>> = _listBurgers.map { BurgerList ->
+        uiState.Success(BurgerList)
+    }
 
-    private val _searchBurgers = MutableLiveData<List<BurgerVO>>()
-    val searchBurgers: LiveData<List<BurgerVO>> = _searchBurgers
+    private val _filteredBurgerList = MutableLiveData<uiState<List<BurgerVO>>>()
+    val filteredBurgerList : LiveData<uiState<List<BurgerVO>>> = _filteredBurgerList
 
     fun fetchData() {
         viewModelScope.launch {
-            _listBurgers.value = uiState.Loading
-            try {
-                val listDTO = repository.getBurgers()
-                val listVO = converter.convert(listDTO)
-                _listBurgers.value = uiState.Success(listVO)
-            } catch (e: Exception) {
-                _listBurgers.value = uiState.Error(e)
-            }
+            _listBurgers.value = useCase.getBurgers()
         }
     }
 
     fun searchByName(name: String) {
         viewModelScope.launch {
+            _filteredBurgerList.value = uiState.Loading
             try {
-                val listDTO = repository.getBurgerByName(name)
-                val listVO = converter.convert(listDTO)
-                val filteredNomes = listVO.filter { it.name?.contains(name, true) == true }
-                _searchBurgers.value = filteredNomes
-            } catch (e: Exception) {
-                println("Erro na requisição: ${e.message}")
+                _filteredBurgerList.value = uiState.Success(useCase.filteredBurgerList(name))
+                } catch (e: Exception) {
+                Log.e("ERROR VIEW_MODEL: ", "${e.message}")
             }
         }
     }

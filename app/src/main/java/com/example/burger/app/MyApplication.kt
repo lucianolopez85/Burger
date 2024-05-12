@@ -2,7 +2,7 @@ package com.example.burger.app
 
 import android.app.Application
 import com.example.burger.di.appModule
-import com.example.burger.di.networkModule
+import com.example.burger.di.createNetworkModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 
@@ -13,7 +13,7 @@ class MyApplication : Application() {
         startKoin {
             androidContext(this@MyApplication)
             modules(
-                networkModule,
+                createNetworkModule(this@MyApplication),
                 appModule
             )
         }

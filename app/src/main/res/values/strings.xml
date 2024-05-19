@@ -4,4 +4,11 @@
     <string name="text_description_item_burger">The Grand Epicurean Gastronomical Masterpiece</string>
     <string name="text_value_item_burger">R$ 4,51</string>
     <string name="list_burgers_title">Lista de Burgers</string>
+
+    <string name="repositories_title">Lista de Repositórios</string>
+    <string name="burger_default_error_message">Encontramos um problema no processamento. Tente novamente mais tarde.</string>
+
+    <string name="default_alert_button">Ok, Entendi</string>
+    <string name="default_alert_title">Atenção</string>
+    <string name="error_button_try_again">Tentar novamente</string>
 </resources>

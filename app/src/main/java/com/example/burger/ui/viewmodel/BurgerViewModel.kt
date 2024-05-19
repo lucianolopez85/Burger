@@ -15,17 +15,20 @@ class BurgerViewModel(
     private val useCase: BurgerUseCase
 ) : ViewModel() {
 
-    private val _listBurgers = MutableLiveData<List<BurgerVO>>()
-    val listBurger: LiveData<uiState<List<BurgerVO>>> = _listBurgers.map { BurgerList ->
-        uiState.Success(BurgerList)
-    }
+    private val _listBurgers =  MutableLiveData<uiState<List<BurgerVO>>>()
+    val listBurger: LiveData<uiState<List<BurgerVO>>> = _listBurgers
 
     private val _filteredBurgerList = MutableLiveData<uiState<List<BurgerVO>>>()
     val filteredBurgerList : LiveData<uiState<List<BurgerVO>>> = _filteredBurgerList
 
     fun fetchData() {
         viewModelScope.launch {
-            _listBurgers.value = useCase.getBurgers()
+            try {
+                val burgers = useCase.getBurgers()
+                _listBurgers.value = uiState.Success(burgers)
+            } catch (e: Exception) {
+                _listBurgers.value = uiState.Error(e)
+            }
         }
     }
 

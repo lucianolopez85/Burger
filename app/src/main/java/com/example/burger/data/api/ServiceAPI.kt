@@ -6,7 +6,7 @@ import retrofit2.http.GET
 
 interface ServiceAPI {
 
-    @MOCK(asset = "response.json", runDelay = true)
+//    @MOCK(asset = "response.json", runDelay = true)
     @GET("burgers")
     suspend fun getBurgers(): List<BurgerResponseDTO>
 }

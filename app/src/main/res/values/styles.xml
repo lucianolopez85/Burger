@@ -2,7 +2,7 @@
 <resources>
 
     <style name="ToolbarTextTitle">
-        <item name="android:fontFamily">@string/m3_ref_typeface_brand_regular</item>
+        <item name="android:fontFamily">sans-serif-smallcaps</item>
         <item name="android:textSize">24sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:layout_margin">24dp</item>

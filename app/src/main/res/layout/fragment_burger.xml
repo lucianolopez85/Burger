@@ -5,48 +5,30 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/icon_back"
-        android:layout_width="wrap_content"
+    <com.example.burger.ui.component.ToolbarView
+        android:id="@+id/component_toolbar"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/size_24"
-        app:layout_constraintStart_toStartOf="parent"
+        android:visibility="visible"
         app:layout_constraintTop_toTopOf="parent"
-        android:src="@drawable/ic_back" />
-
-    <TextView
-        android:id="@+id/text_title"
-        style="@style/ToolbarTextTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/list_burgers_title"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:id="@+id/icon_close"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:layout_margin="@dimen/size_26"
-        android:src="@drawable/ic_close"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        />
 
     <androidx.appcompat.widget.SearchView
         android:id="@+id/search_burger"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/size_24"
+        android:layout_marginHorizontal="@dimen/size_24"
         android:background="@drawable/bg_edit_search"
         android:drawableStart="@drawable/ic_search_line"
-        app:queryHint="Buscar Burger"
         app:iconifiedByDefault="false"
-        app:queryBackground="@android:color/transparent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/icon_back" />
+        app:queryBackground="@android:color/transparent"
+        app:queryHint="Buscar Burger"
+        app:layout_constraintTop_toBottomOf="@id/component_toolbar"/>
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/refresh_layout"
@@ -63,7 +45,6 @@
             android:id="@+id/recycler_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/size_24"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_title"
@@ -71,4 +52,15 @@
             tools:listitem="@layout/item_burger" />
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+    <com.example.burger.ui.component.AlertView
+        android:id="@+id/alert_view"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/search_burger" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

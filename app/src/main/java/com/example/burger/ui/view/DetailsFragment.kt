@@ -9,16 +9,21 @@ import com.example.burger.commons.formattedCurrency
 import com.example.burger.databinding.FragmentDetailsBinding
 import com.example.burger.domain.vo.BurgerVO
 import com.example.burger.domain.vo.IngredientVO
+import com.example.burger.navigation.BurgerNavigation
 import com.example.burger.ui.adapter.IngredientsAdapter
-import com.example.burger.ui.viewmodel.BurgerViewModel
 import com.squareup.picasso.Picasso
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.android.ext.android.inject
+import org.koin.core.parameter.parametersOf
 
 class DetailsFragment : Fragment(R.layout.fragment_details) {
 
+    companion object {
+        private const val DETAIL_DATA = "BURGER_DETAIL_DATA"
+    }
+
     private val binding by lazy { FragmentDetailsBinding.bind(requireView()) }
-    private val viewModel: BurgerViewModel by viewModel()
-    private val burgerId by lazy { arguments?.getSerializable("burgerVO") as BurgerVO }
+    private val burgerVO by lazy { arguments?.getSerializable(DETAIL_DATA) as BurgerVO }
+    private val navigation: BurgerNavigation by inject { parametersOf(findNavController()) }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -28,12 +33,12 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
 
     private fun setupToolbar() {
         binding.iconBackDetail.setOnClickListener {
-            findNavController().navigate(R.id.action_detailsFragment_to_burgerFragment)
+            navigation.gotoBurgerList()
         }
     }
 
     private fun setupLayout() {
-        burgerId.let { burgerVO ->
+        burgerVO.let { burgerVO ->
             binding.titleBurgerDetaiL.text = burgerVO.name
             binding.descriptionBurgerDetail.text = burgerVO.desc
             binding.priceDetail.text = burgerVO.price?.formattedCurrency()

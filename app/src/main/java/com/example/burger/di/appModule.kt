@@ -1,10 +1,12 @@
 package com.example.burger.di
 
+import androidx.navigation.NavController
 import com.example.burger.data.api.ServiceAPI
 import com.example.burger.data.repository.BurgerRepository
 import com.example.burger.data.repository.BurgerRepositoryImpl
 import com.example.burger.domain.converter.BurgerConverter
 import com.example.burger.domain.usecase.BurgerUseCase
+import com.example.burger.navigation.BurgerNavigation
 import com.example.burger.ui.viewmodel.BurgerViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -20,4 +22,6 @@ val appModule = module {
     factory<BurgerRepository> { BurgerRepositoryImpl(get()) }
 
     single { BurgerConverter() }
+
+    factory { (navController: NavController) -> BurgerNavigation(navController) }
 }

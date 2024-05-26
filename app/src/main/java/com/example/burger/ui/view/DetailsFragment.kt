@@ -7,7 +7,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.burger.R
 import com.example.burger.commons.formattedCurrency
 import com.example.burger.databinding.FragmentDetailsBinding
-import com.example.burger.domain.vo.BurgerVO
+import com.example.burger.domain.vo.BurgerItem
 import com.example.burger.domain.vo.IngredientVO
 import com.example.burger.navigation.BurgerNavigation
 import com.example.burger.ui.adapter.IngredientsAdapter
@@ -22,7 +22,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
     }
 
     private val binding by lazy { FragmentDetailsBinding.bind(requireView()) }
-    private val burgerVO by lazy { arguments?.getSerializable(DETAIL_DATA) as BurgerVO }
+    private val burgerItem by lazy { arguments?.getSerializable(DETAIL_DATA) as BurgerItem }
     private val navigation: BurgerNavigation by inject { parametersOf(findNavController()) }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -38,7 +38,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
     }
 
     private fun setupLayout() {
-        burgerVO.let { burgerVO ->
+        burgerItem.let { burgerVO ->
             binding.titleBurgerDetaiL.text = burgerVO.name
             binding.descriptionBurgerDetail.text = burgerVO.desc
             binding.priceDetail.text = burgerVO.price?.formattedCurrency()

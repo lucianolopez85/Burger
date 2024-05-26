@@ -2,7 +2,7 @@ package com.example.burger.domain.vo
 
 import java.io.Serializable
 
-data class BurgerVO(
+data class SearchFilterVO(
     override val desc: String?,
     override val id: Int?,
     override val imageVO: List<ImageVO?>?,

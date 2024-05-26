@@ -9,7 +9,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.burger.R
 import com.example.burger.commons.uiState
 import com.example.burger.databinding.FragmentBurgerBinding
-import com.example.burger.domain.vo.BurgerVO
+import com.example.burger.domain.vo.BurgerItem
 import com.example.burger.navigation.BurgerNavigation
 import com.example.burger.ui.adapter.BurgerAdapter
 import com.example.burger.ui.viewmodel.BurgerViewModel
@@ -65,7 +65,11 @@ class BurgerFragment : Fragment(R.layout.fragment_burger) {
         filteredBurgerList.observe(viewLifecycleOwner) { state ->
             when (state) {
                 is uiState.Loading -> showLoading()
-                is uiState.Success -> showSuccess(state.data)
+                is uiState.Success -> {
+                    showSuccess(state.data)
+
+                }
+
                 is uiState.Error -> showError(state.data)
             }
         }
@@ -87,11 +91,12 @@ class BurgerFragment : Fragment(R.layout.fragment_burger) {
         isRefreshing = true
     }
 
-    private fun showSuccess(data: List<BurgerVO>) = with(binding) {
+    private fun showSuccess(data: List<BurgerItem>) = with(binding) {
         refreshLayout.isRefreshing = false
         val burgerAdapter = BurgerAdapter(data) { burger ->
             navigation.gotoDetails(burger)
         }
+        burgerAdapter.updateData(data)
         recyclerView.setHasFixedSize(true)
         recyclerView.adapter = burgerAdapter
     }

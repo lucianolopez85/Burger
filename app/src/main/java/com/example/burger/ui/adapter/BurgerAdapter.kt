@@ -7,17 +7,22 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.burger.R
 import com.example.burger.commons.formattedCurrency
 import com.example.burger.databinding.ItemBurgerBinding
-import com.example.burger.domain.vo.BurgerVO
+import com.example.burger.domain.vo.BurgerItem
 import com.squareup.picasso.Picasso
 
 class BurgerAdapter(
-    private val itemList: List<BurgerVO>,
-    private val onItemClick: (BurgerVO) -> Unit
+    private var itemList: List<BurgerItem>,
+    private val onItemClick: (BurgerItem) -> Unit
 ) : RecyclerView.Adapter<BurgerAdapter.ItemViewHolder>() {
+
+    fun updateData(newItemList: List<BurgerItem>) {
+        itemList = newItemList
+        notifyDataSetChanged()
+    }
 
     inner class ItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val binding = ItemBurgerBinding.bind(view)
-        fun bind(data: BurgerVO) {
+        fun bind(data: BurgerItem) {
             binding.textNameBurger.text = data.name
             binding.textDescriptionBurger.text = data.desc
             binding.textPriceBurger.text = data.price?.formattedCurrency()

@@ -63,4 +63,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/search_burger" />
 
+    <include
+        android:id="@+id/search_view_empty"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        layout="@layout/search_view_empty"
+        app:layout_constraintTop_toBottomOf="@id/search_burger" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

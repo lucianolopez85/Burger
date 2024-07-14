@@ -11,4 +11,5 @@
     <string name="default_alert_button">Ok, Entendi</string>
     <string name="default_alert_title">Atenção</string>
     <string name="error_button_try_again">Tentar novamente</string>
+    <string name="search_view_alert">Não foi encontrado!</string>
 </resources>

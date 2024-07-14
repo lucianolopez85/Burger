@@ -10,6 +10,7 @@ import com.example.burger.R
 import com.example.burger.commons.uiState
 import com.example.burger.databinding.FragmentBurgerBinding
 import com.example.burger.domain.vo.BurgerItem
+import com.example.burger.domain.vo.SearchFilterVO
 import com.example.burger.navigation.BurgerNavigation
 import com.example.burger.ui.adapter.BurgerAdapter
 import com.example.burger.ui.viewmodel.BurgerViewModel
@@ -46,17 +47,21 @@ class BurgerFragment : Fragment(R.layout.fragment_burger) {
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                return if (newText != null) {
+                return if (!newText.isNullOrEmpty()) {
                     observeSearchedBurgers(newText)
                     true
-                } else false
+                } else {
+                    clearSearch()
+                    true
+                }
+
             }
         })
         val closeButton: View? = findViewById(androidx.appcompat.R.id.search_close_btn)
         closeButton?.setOnClickListener {
             setQuery("", false)
             clearFocus()
-            observeBurgerListState()
+            clearSearch()
         }
     }
 
@@ -66,10 +71,12 @@ class BurgerFragment : Fragment(R.layout.fragment_burger) {
             when (state) {
                 is uiState.Loading -> showLoading()
                 is uiState.Success -> {
-                    showSuccess(state.data)
-
+                    if (state.data.isEmpty()) {
+                        noResult()
+                    } else {
+                        showFilteredSuccess(state.data)
+                    }
                 }
-
                 is uiState.Error -> showError(state.data)
             }
         }
@@ -93,12 +100,38 @@ class BurgerFragment : Fragment(R.layout.fragment_burger) {
 
     private fun showSuccess(data: List<BurgerItem>) = with(binding) {
         refreshLayout.isRefreshing = false
-        val burgerAdapter = BurgerAdapter(data) { burger ->
-            navigation.gotoDetails(burger)
+        if (data.isEmpty()) {
+            noResult()
+        } else {
+            val burgerAdapter = BurgerAdapter(data) { burger ->
+                navigation.gotoDetails(burger)
+            }
+            burgerAdapter.updateData(data)
+            recyclerView.setHasFixedSize(true)
+            recyclerView.adapter = burgerAdapter
+            searchViewEmpty.root.isVisible = false
         }
-        burgerAdapter.updateData(data)
-        recyclerView.setHasFixedSize(true)
-        recyclerView.adapter = burgerAdapter
+    }
+
+    private fun showFilteredSuccess(data: List<SearchFilterVO>) = with(binding) {
+        refreshLayout.isRefreshing = false
+        if (data.isEmpty()) {
+            noResult()
+        } else {
+            val burgerAdapter = BurgerAdapter(data) { burger ->
+                navigation.gotoDetails(burger)
+            }
+            burgerAdapter.updateData(data)
+            recyclerView.setHasFixedSize(true)
+            recyclerView.adapter = burgerAdapter
+            recyclerView.isVisible = true
+            searchViewEmpty.root.isVisible = false
+        }
+    }
+    private fun noResult() = with(binding) {
+        refreshLayout.isRefreshing = false
+        recyclerView.isVisible = false
+        searchViewEmpty.root.isVisible = true
     }
 
     private fun showError(data: Throwable?) = with(binding) {
@@ -107,5 +140,12 @@ class BurgerFragment : Fragment(R.layout.fragment_burger) {
         }
         refreshLayout.isVisible = false
         searchBurger.isVisible = false
+        searchViewEmpty.root.isVisible = false
+    }
+
+    private fun clearSearch() = with(viewModel) {
+        binding.searchBurger.setQuery("", false)
+        binding.searchBurger.clearFocus()
+        observeBurgerListState()
     }
 }
